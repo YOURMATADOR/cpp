@@ -27,6 +27,7 @@ public:
     Vector<T> &del(unsigned long int);
     long int find(T);
     Vector<T> &insert(unsigned int, T);
+    Vector<T> &prepend(T);
 };
 
 template <typename T>
@@ -45,7 +46,7 @@ int Vector<T>::at(int index)
     {
         return -1;
     };
-    return this->arr[index];
+    return *(this->arr + index);
 }
 
 template <typename T>
@@ -119,7 +120,7 @@ Vector<T> &Vector<T>::Pop()
 {
     if (this->isEmpty())
         return *this;
-    *(this->arr + size) = 0;
+    *(this->arr + this->size - 1) = 0;
     this->size--;
     if (this->canHalfSize())
         this->resize(this->capacity / 2);
@@ -146,11 +147,13 @@ Vector<T> &Vector<T>::del(unsigned long int index)
     if ((index + 1) > this->size)
         return *this;
 
-    for (unsigned long int i = index; i < size - 1; i++)
+    for (unsigned long int i = index; i < this->size - 1; i++)
     {
-        *(this->arr + i) = *(this->arr + 1)
+        std::cout << "current : " << *(this->arr + i) << " next: " << *(this->arr + (unsigned long int)(i + 1)) << std::endl;
+
+        *(this->arr + i) = *(this->arr + (unsigned long int)(i + 1));
     };
-    *(this->arr + (size - 1)) = nullptr;
+    *(this->arr + (unsigned long int)(this->size - 1)) = 0;
     this->size--;
 
     if (this->canHalfSize())
@@ -190,8 +193,15 @@ Vector<T> &Vector<T>::insert(unsigned int index, T element)
         *(this->arr + i) = temp;
         temp = temp2;
     };
-    this->size++;
     *(this->arr + size) = temp;
+    this->size++;
+    return *this;
+}
+
+template <typename T>
+Vector<T> &Vector<T>::prepend(T item)
+{
+    this->insert(0, item);
     return *this;
 }
 
@@ -218,5 +228,14 @@ int main()
     v.Push(3);
     v.Push(4);
     std::cout << v.isEmpty() << std::endl; // 0
-    // return 0;
+    v.Pop();
+
+    v.insert(1, 4).prepend(0); // 0,1,4,2,3
+    int el = v.at(2);
+    v.remove(4);
+    v.Push(19); // 0,1,2,3
+    el = v.at(2);
+    int res = v.find(19);
+    std::cout << el << std::endl;
+    return 0;
 }
