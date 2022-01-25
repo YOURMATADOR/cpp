@@ -39,7 +39,7 @@ Vector<T> &Vector<T>::GetReference()
     return *this;
 };
 
-template <typename T>
+template <typename T> // O(1)
 int Vector<T>::at(int index)
 {
     if (index > this->capacity)
@@ -49,7 +49,7 @@ int Vector<T>::at(int index)
     return *(this->arr + index);
 }
 
-template <typename T>
+template <typename T> // O(1)
 int *Vector<T>::atPointer(unsigned int index)
 {
     if (index > this->capacity)
@@ -59,7 +59,7 @@ int *Vector<T>::atPointer(unsigned int index)
     return this->arr + index;
 }
 
-template <typename T>
+template <typename T> // O(1)
 bool Vector<T>::isEmpty()
 {
     if (this->size > 0)
@@ -69,7 +69,7 @@ bool Vector<T>::isEmpty()
     return true;
 }
 
-template <typename T>
+template <typename T> // O(1)
 bool Vector<T>::canDoubleSize() const
 {
     double currentlf = (double)this->size / (double)this->capacity;
@@ -80,7 +80,7 @@ bool Vector<T>::canDoubleSize() const
     return false;
 }
 
-template <typename T>
+template <typename T> // O(1)
 bool Vector<T>::canHalfSize() const
 {
     double currentlf = (double)this->size / (double)this->capacity;
@@ -91,7 +91,7 @@ bool Vector<T>::canHalfSize() const
     return false;
 }
 
-template <typename T>
+template <typename T> // O(n)
 void Vector<T>::resize(unsigned long int newCapacity)
 {
     T *old = this->arr;
@@ -104,7 +104,7 @@ void Vector<T>::resize(unsigned long int newCapacity)
     delete[] old;
 }
 
-template <typename T>
+template <typename T> // O(1)
 Vector<T> &Vector<T>::Push(T element)
 {
     if (this->canDoubleSize())
@@ -115,7 +115,7 @@ Vector<T> &Vector<T>::Push(T element)
     return *this;
 }
 
-template <typename T>
+template <typename T> // O(1)
 Vector<T> &Vector<T>::Pop()
 {
     if (this->isEmpty())
@@ -128,7 +128,7 @@ Vector<T> &Vector<T>::Pop()
     return *this;
 }
 
-template <typename T>
+template <typename T> // 
 Vector<T> &Vector<T>::remove(T item)
 {
     if (this->isEmpty())
@@ -139,7 +139,7 @@ Vector<T> &Vector<T>::remove(T item)
     return *this;
 }
 
-template <typename T>
+template <typename T> // O(n)
 Vector<T> &Vector<T>::del(unsigned long int index)
 {
     if (this->isEmpty())
@@ -149,8 +149,6 @@ Vector<T> &Vector<T>::del(unsigned long int index)
 
     for (unsigned long int i = index; i < this->size - 1; i++)
     {
-        std::cout << "current : " << *(this->arr + i) << " next: " << *(this->arr + (unsigned long int)(i + 1)) << std::endl;
-
         *(this->arr + i) = *(this->arr + (unsigned long int)(i + 1));
     };
     *(this->arr + (unsigned long int)(this->size - 1)) = 0;
@@ -161,7 +159,7 @@ Vector<T> &Vector<T>::del(unsigned long int index)
     return *this;
 }
 
-template <typename T>
+template <typename T> // O(n)
 long int Vector<T>::find(T element)
 {
     if (this->isEmpty())
@@ -176,7 +174,7 @@ long int Vector<T>::find(T element)
     return -1;
 }
 
-template <typename T>
+template <typename T> // O(n)
 Vector<T> &Vector<T>::insert(unsigned int index, T element)
 {
     if (!(index < size))
@@ -198,7 +196,7 @@ Vector<T> &Vector<T>::insert(unsigned int index, T element)
     return *this;
 }
 
-template <typename T>
+template <typename T>// O(n)
 Vector<T> &Vector<T>::prepend(T item)
 {
     this->insert(0, item);
